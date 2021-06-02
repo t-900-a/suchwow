@@ -1,3 +1,7 @@
+MIRROR OF https://git.wownero.com/lza_menace/suchwow
+
+DO NOT PLAN TO MERGE ANY FURTHER COMMITS
+
 # SuchWow!
 
 TBD
