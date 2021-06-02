@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+set +x
+
+# these are only used for local development
+WALLET_PATH="$(pwd)/data/suchwow-wallet"
+WALLET_PASS="sdfj209rFLJDF29ruafj2)__!a@"
+WALLET_RPC_USER="suchwow"
+WALLET_RPC_PASS="y8YzL3cIW6Yeifa23s7Yng=="
+DAEMON_URI="http://node.suchwow.xyz:34568"
+
+if [ ! -d "$WALLET_PATH" ]; then
+  # initialize new wallet and retain seed
+  docker run --rm -it --name suchwow-wallet-init \
+    -v $WALLET_PATH:/root \
+    lalanza808/wownero \
+    wownero-wallet-cli \
+      --daemon-address $DAEMON_URI \
+      --generate-new-wallet /root/wow \
+      --password $WALLET_PASS
+fi
+
+# setup rpc process
+docker run --rm -d --name suchwow-wallet-rpc \
+  -v $WALLET_PATH:/root \
+  -p 8888:8888 \
+  lalanza808/wownero \
+  wownero-wallet-rpc \
+    --daemon-address $DAEMON_URI \
+    --wallet-file /root/wow \
+    --password $WALLET_PASS \
+    --rpc-bind-port 8888 \
+    --rpc-bind-ip 0.0.0.0 \
+    --confirm-external-bind \
+    --rpc-login "$WALLET_RPC_USER:$WALLET_RPC_PASS" \
+    --log-file /root/rpc.log

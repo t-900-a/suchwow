@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <!--
+ ░░░░░░░█▐▓▓░████▄▄▄█▀▄▓▓▓▌█ very website
+ ░░░░░▄█▌▀▄▓▓▄▄▄▄▀▀▀▄▓▓▓▓▓▌█
+ ░░░▄█▀▀▄▓█▓▓▓▓▓▓▓▓▓▓▓▓▀░▓▌█
+ ░░█▀▄▓▓▓███▓▓▓███▓▓▓▄░░▄▓▐█▌ such html
+ ░█▌▓▓▓▀▀▓▓▓▓███▓▓▓▓▓▓▓▄▀▓▓▐█
+ ▐█▐██▐░▄▓▓▓▓▓▀▄░▀▓▓▓▓▓▓▓▓▓▌█▌   WOW
+ █▌███▓▓▓▓▓▓▓▓▐░░▄▓▓███▓▓▓▄▀▐█
+ █▐█▓▀░░▀▓▓▓▓▓▓▓▓▓██████▓▓▓▓▐█
+ ▌▓▄▌▀░▀░▐▀█▄▓▓██████████▓▓▓▌█▌
+ ▌▓▓▓▄▄▀▀▓▓▓▀▓▓▓▓▓▓▓▓█▓█▓█▓▓▌█▌ many memes
+ █▐▓▓▓▓▓▓▄▄▄▓▓▓▓▓▓█▓█▓█▓█▓▓▓▐█
+ -->
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <meta name="HandheldFriendly" content="True">
+     <meta name="MobileOptimized" content="320">
+     <link rel="shortcut icon" href="/static/wownero_logo.ico" type="image/x-icon" />
+     {% if post %}
+     <meta property="og:url" content="{{ url_for('post.read', id=post.id, _external=True) }}" />
+     <meta property="og:image" content="{{ url_for('post.uploaded_file', filename=post.image_name, _external=True) }}" />
+     <meta property="og:description" content="{{ post.text }}" />
+     <meta property="og:title" content="SuchWow #{{ post.id }} - {{ post.title }}" />
+     <meta name="twitter:title" content="SuchWow #{{ post.id }} - {{ post.title }}" />
+     <meta name="twitter:description" content="{{ post.text }}" />
+     <meta name="twitter:image" content="{{ url_for('post.uploaded_file', filename=post.image_name, _external=True) }}" />
+     <meta name="twitter:card" content="summary_large_image" />
+     {% else %}
+     <meta property="og:url" content="https://suchwow.xyz/" />
+     <meta property="og:image" content="https://funding.wownero.com/static/wowdoge-a.jpg" />
+     <meta property="og:description" content="SuchWow! Memes n shit!" />
+     <meta property="og:title" content="SuchWow!" />
+     <meta name="twitter:title" content="SuchWow!" />
+     <meta name="twitter:description" content="SuchWow! Memes n shit!" />
+     <meta name="twitter:image" content="https://funding.wownero.com/static/wowdoge-a.jpg" />
+     <meta name="twitter:card" content="summary_large_image" />
+     {% endif %}
+     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+     <meta name="theme-color" content="#ffffff">
+     <meta name="apple-mobile-web-app-title" content="SuchWow!">
+     <meta name="application-name" content="SuchWow!">
+     <meta name="msapplication-TileColor" content="#da532c">
+     <meta name="keywords" content="wownero, wow, memes, monero, xmr, cryptocurrency">
+     <link href="/static/css/bulma.min.css" rel="stylesheet">
+     <link href="/static/css/custom.css" rel="stylesheet">
+     <title>SuchWow!</title>
+ </head>
+
+ <body>
+
+{% include 'navbar.html' %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="notification is-danger container is-light">
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+
+ <!-- Page Content -->
+ {% block content %} {% endblock %}
+
+ <!-- Footer -->
+ <footer class="footer">
+  <div class="content has-text-centered">
+    <p><strong>SuchWow</strong> by <a href="https://lzahq.tech" target="_blank">lza_menace</a></p>
+    <p><a href="https://wownero.org/" target="_blank">Learn more about the infamous shitcoin, Wownero</a>.</p>
+  </div>
+</footer>
+
+<!-- JS -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+
+        // Get the target from the "data-target" attribute
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+
+});
+</script>
+
+ </body>
+ </html>

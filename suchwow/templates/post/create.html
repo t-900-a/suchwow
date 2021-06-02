@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container" style="width:40%;">
+  <div class="submit content">
+    <h1>Submit A Meme</h1>
+    <h2>Rules</h2>
+    <ol>
+      <li>no super low effort memes</li>
+      <li>no nsfl and nsfw</li>
+      <li>must pertain to wownero or crypto in general</li>
+    </ol>
+
+    <form method=post enctype=multipart/form-data class="form-horizontal">
+      <div class="form-group">
+          <label class="sr-only" for="inlineFormInput">Title</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Title" name="title">
+      </div>
+      <div class="form-group">
+          <label class="sr-only" for="inlineFormInput">Text</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Text (optional)" name="text">
+      </div>
+      <div class="form-group">
+        <input type=file name=file>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

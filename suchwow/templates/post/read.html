@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+  <div class="post" style="text-align:center;">
+
+    <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">All Posts</a></li>
+        <li class="is-active"><a href="#" aria-current="page">Post {{ post.id }}</a></li>
+      </ul>
+    </nav>
+    {% if post.hidden %}
+      <h2>You cannot see this post</h2>
+    {% else %}
+      <!-- Post Info -->
+      <section class="section">
+        <div class="content">
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.text }}</p>
+          {% if not post.approved %}
+            <a href="{{ url_for('post.approve', id=post.id) }}"><button type="button" name="button">Approve</button></a>
+            <a href="{{ url_for('post.delete', id=post.id) }}"><button type="button" name="button">Reject</button></a>
+          {% endif %}
+          <p>Submitted by <i><u><a href="/?submitter={{ post.submitter }}">{{ post.submitter }}</a></u></i> at <i>{{ post.timestamp }}</i></p>
+          <img src="{{ url_for('post.uploaded_file', filename=post.image_name) }}" width=600/ style="border-radius:4px;">
+        </div>
+      </section>
+
+      <!-- Payments -->
+      <section class="section content">
+        <h3>Payments</h3>
+        <p style="word-break:break-all;">Vote for this post by sending WOW to the following address:<br><i>{{ address }}</i></p>
+        {% if qr_code %}
+          <img src="data:image/png;base64,{{ qr_code }}" width=180 class="center"><br /><br />
+        {% endif %}
+
+        <div class="columns">
+          <div class="column content">
+            <h4>WOW Received</h4>
+            {% if transfers.in %}
+              <ul>
+                {% for transfer in transfers.in %}
+                  {% if transfer.amount > 0 %}
+                  <li>
+                    {{ transfer.amount / 100000000000 }} WOW
+                    (<a href="https://wownero.club/transaction/{{ transfer.txid }}" target="_blank">{{ transfer.txid | shorten_address }}</a>)
+                    - {{ transfer.timestamp | humanize }}
+                  </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No WOW received yet. Show this post some love!</p>
+            {% endif %}
+          </div>
+          <div class="column content">
+            <h4>WOW Sent</h4>
+            {% if transfers.out %}
+              <ul>
+                {% for transfer in transfers.out %}
+                  <li>
+                    {{ transfer.amount / 100000000000 }} WOW
+                    (<a href="https://wownero.club/transaction/{{ transfer.txid }}" target="_blank">{{ transfer.txid | shorten_address }}</a>)
+                    - {{ transfer.timestamp | humanize }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No payouts yet.</p>
+            {% endif %}
+          </div>
+        </div>
+
+      </section>
+
+    {% endif %}
+
+    {% if config.DEBUG %}
+      {{ post.show() }}
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

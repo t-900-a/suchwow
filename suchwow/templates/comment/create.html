@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container" style="width:40%;">
+  <div class="submit">
+    <h1>Leave a Comment</h1>
+    <form method=post enctype=multipart/form-data class="form-horizontal">
+      <div class="form-group">
+          <label class="sr-only" for="inlineFormInput">Text</label>
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Comment text (max 300 chars)" name="comment">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+body {
+  background-image: url("/static/bg.png");
+  background-repeat: repeat;
+}
+
+.current-page-btn {
+  color: blue;
+  border: 1px blue solid;
+}

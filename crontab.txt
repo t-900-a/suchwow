@@ -1,0 +1,5 @@
+SUCHWOW_HOME=/opt/suchwow
+
+0 */6 * * * FLASK_APP=$SUCHWOW_HOME/suchwow/app.py FLASK_SECRETS=config.py $SUCHWOW_HOME/.venv/bin/flask payout_users >> $SUCHWOW_HOME/data/payout_users.log
+0 */8 * * * FLASK_APP=$SUCHWOW_HOME/suchwow/app.py FLASK_SECRETS=config.py $SUCHWOW_HOME/.venv/bin/flask reddit_random >> $SUCHWOW_HOME/data/reddit_random.log
+*/5 * * * * FLASK_APP=$SUCHWOW_HOME/suchwow/app.py FLASK_SECRETS=config.py $SUCHWOW_HOME/.venv/bin/flask reddit_recent >> $SUCHWOW_HOME/data/reddit_recent.log

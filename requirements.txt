@@ -1,0 +1,10 @@
+requests
+flask
+flask-session
+peewee
+gunicorn
+six
+praw
+qrcode
+Pillow
+arrow

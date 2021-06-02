@@ -1,0 +1,91 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="/static/wow_logo.png">
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{{ url_for('index') }}">Home</a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">Leaderboards</a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{{ url_for('leaderboard.top_posters') }}">Top Posters</a>
+          <a class="navbar-item" href="{{ url_for('leaderboard.top_posts') }}?days=1">Top Memes Last 1 Day</a>
+          <a class="navbar-item" href="{{ url_for('leaderboard.top_posts') }}?days=3">Top Memes Last 3 Days</a>
+          <a class="navbar-item" href="{{ url_for('leaderboard.top_posts') }}?days=7">Top Memes Last Week</a>
+          <a class="navbar-item" href="{{ url_for('leaderboard.top_posts') }}?days=30">Top Memes Last Month</a>
+        </div>
+      </div>
+      <a class="navbar-item" href="{{ url_for('about') }}">About</a>
+      <a class="navbar-item" href="{{ url_for('post.create') }}">Submit</a>
+      {% if session.auth %}
+        <a class="navbar-item" style="color: orange;" href="{{ url_for('mod_queue') }}">Mods!</a>
+      {% endif %}
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          {% if not 'auth' in session %}
+            <a class="button is-primary" href="https://login.wownero.com/developer/"><strong>Sign up</strong></a>
+            <a class="button is-light" href="{{ url_for('auth.login') }}">Log in</a>
+          {% else %}
+            <a class="button is-primary" href="{{ url_for('profile.edit') }}">Profile ({{ session.auth.preferred_username }})</a>
+            <a class="button is-light" href="{{ url_for('auth.logout') }}">Logout</a>
+          {% endif  %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Navigation -->
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <h3>SuchWow!</h3>
+        </a>
+
+        <div class="" id="">
+            <ul class="navbar-nav ml-auto">
+                {% if session.auth %}
+                <li class="nav-item">
+
+                </li>
+                {% endif %}
+                <li class="nav-item">
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('post.create') }}">Submit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                </li>
+                {% if session.auth == None %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                    {% if session.auth %}
+                      <a class="nav-link" href="{{ url_for('profile.edit') }}">Profile ({{ session.auth.preferred_username }})</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                  </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav> -->

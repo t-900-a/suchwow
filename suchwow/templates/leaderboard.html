@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container content" style="text-align:center;">
+
+    <h1>Top Posters</h1>
+
+  {% if posters %}
+    <table class="table table-striped">
+      <tr>
+        <th>Submitter</th>
+        <th>Post Count</th>
+        <th>Amount</th>
+      </tr>
+      {% for poster, data in posters.items() | sort(attribute='1.amount', reverse=True) %}
+        <tr>
+          <td><a href="/?submitter={{ poster }}">{{ poster }}</a></td>
+          <td>{{ data["posts"] | length }}</td>
+          <td>{{ data["amount"] }} WOW</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No posts yet!</p>
+  {% endif %}
+
+  <hr>
+  <a href="{{ url_for('index') }}"><button class="btn btn-warning">Go Home</button></a>
+
+</div>
+
+{% endblock %}

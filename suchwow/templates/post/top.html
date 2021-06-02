@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container" style="text-align:center;">
+
+  <h1 class="title">Top Memes Last {{ days }} Days</h1>
+
+  <section class="section">
+  {% if posts %}
+      {% for row in posts | sort(attribute='received_wow', reverse=True) | batch(4) %}
+        <div class="columns">
+          {% for post in row %}
+          <div class="column">
+            <div class="card">
+              <div class="card-image">
+                  <a href="{{ url_for('post.read', id=post.id) }}">
+                    <img src="{{ url_for('post.uploaded_file', filename=post.thumbnail_name) }}" alt="Placeholder image">
+                  </a>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4">
+                      <a href="{{ url_for('post.read', id=post.id) }}">{{ post.title }}</a>
+                    </p>
+                    <p class="subtitle is-6"><a href="/?submitter={{ post.submitter }}">{{ post.submitter }}</a></p>
+                  </div>
+                </div>
+
+                <div class="content">
+                  {{ post.text | truncate(60) }}
+                  <p><strong>{{ post.received_wow }} WOW received</strong></p>
+                  <time datetime="2016-1-1">{{ post.timestamp.year }}-{{ post.timestamp.month }}-{{ post.timestamp.day }} {{ post.timestamp.hour }}:{{ post.timestamp.minute }} UTC</time>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+  {% else %}
+    <p>No posts yet!</p>
+  {% endif %}
+  </section>
+
+  {% if total_pages %}
+  <nav class="pagination is-centered pb-4" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+      {% for p in range(1, total_pages + 1) %}
+        <a href="{% if request.args.submitter %}/?submitter={{ request.args.submitter }}&{% else %}/?{% endif %}page={{ p }}" class="pagination-link {% if p == page %}current-page-btn{% endif %}">{{ p }}</a>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+
+
+</div>
+
+{% endblock %}
